@@ -1,0 +1,77 @@
+/*
+ID: gorakhm1
+PROG: milk2
+LANG: C++
+*/
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+#define MAX 5010
+using namespace std;
+
+//int startTimes[MAX], endTimes[MAX];
+typedef std::pair <int, int> pp;
+typedef std::vector < pp > vv;
+
+vv myVector;
+
+int main()
+{
+    ifstream fin("milk2.in");
+    ofstream fout("milk2.out");
+    int iii, jjj;
+    int x, y;
+    int counter;
+    int n;
+    int st, en;
+    int checkEnd;
+    int maxMilking;
+    int maxNoMilking;
+
+    fin >> n;
+
+    for(iii = 0; iii < n; iii++){
+        fin >> x >> y;
+        myVector.push_back(std::make_pair(x, y));
+    }
+
+    sort(myVector.begin(), myVector.end());
+
+    counter = 0;
+    maxMilking = 0;
+    maxNoMilking = 0;
+
+    st = myVector[0].first;
+    en = myVector[0].second;
+
+    if(n == 1){
+        fout << en - st << " " << 0 << endl;
+    }
+
+    else{
+
+        for(iii = 1; iii < n; iii++){
+            if(myVector[iii].first <= en && myVector[iii].second > en)
+                en = myVector[iii].second;
+
+            else if(myVector[iii].first > en || iii == n - 1){
+                if(en - st > maxMilking)
+                    maxMilking = en - st;
+
+                if(myVector[iii].first > en && myVector[iii].first - en > maxNoMilking)
+                    maxNoMilking = myVector[iii].first - en;
+
+                st = myVector[iii].first;
+                en = myVector[iii].second;
+            }
+        }
+
+        fout << maxMilking << " " << maxNoMilking << endl;
+
+    }
+
+    return 0;
+}
