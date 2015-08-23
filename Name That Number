@@ -1,0 +1,137 @@
+/*
+ID: gorakhm1
+PROG: namenum
+LANG: C++
+*/
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <set>
+
+#define MAX 15
+#define N 5010
+
+using namespace std;
+
+void generateAll(int i, char a[MAX]);
+void binarySearch(int l, int r, char a[MAX]);
+
+std::set<string> mySet;
+std::set<string>::iterator it;
+
+struct dig{
+    char alpha[3];
+
+}digits[10];
+
+
+char dictionary[N][MAX];
+char s[MAX];
+int n, m, counter;
+FILE *fp1, *fp2, *fp3;
+
+void generateAll(int i, char a[MAX]){
+    int j, k;
+    char b[MAX];
+    memset(b, 0, MAX);
+    strcpy(b, a);
+
+    if(i == n - 1){
+        for(j = 0; j < 3; j++){
+            b[i] = digits[s[i] - '0'].alpha[j];
+
+            string shiz(b);
+            it = mySet.find(shiz);
+            if(it != mySet.end()){
+                fprintf(fp3, "%s\n", b);
+                counter++;
+            }
+
+        }
+    }
+
+    else{
+        for(j = 0; j < 3; j++){
+            b[i] = digits[s[i] - '0'].alpha[j];
+            generateAll(i + 1, b);
+        }
+
+    }
+
+}
+/*
+void binarySearch(int l, int r, char a[MAX]){
+    int mid = (l + r ) / 2;
+
+    if(r < l)
+        return;
+
+    int cmp = strcmp(dictionary[mid], a);
+
+    if(cmp == 0){
+        fprintf(fp3, "%s\n", a);
+        counter++;
+        return;
+    }
+
+    else if(cmp < 0)
+        binarySearch(l + 1, r, a);
+
+    else if(cmp > 0)
+        binarySearch(l, r - 1, a);
+
+}*/
+
+
+int main()
+{
+
+    fp1 = fopen("dict.txt", "r");
+    fp2 = fopen("namenum.in", "r");
+    fp3 = fopen("namenum.out", "w");
+    int i, j, k;
+
+
+    i = 0;
+    while(!feof(fp1)){
+        fscanf(fp1, "%s", dictionary[i]);
+        i++;
+    }
+
+    m = i - 1;
+
+    for(i = 0; i <= m; i++){
+        string shiz(dictionary[i]);
+        mySet.insert(shiz);
+    }
+
+    fscanf(fp2, "%s", s);
+
+    //scanf("%s", s);
+    n = strlen(s);
+
+
+    char ch = 'A';
+    for(i = 2; i <= 9; i++){
+        for(j = 0; j < 3; j++){
+            if(ch == 'Q')
+                ch++;
+            digits[i].alpha[j] = ch;
+            ch++;
+        }
+    }
+
+    /*for(std::set<char *> ::iterator it = mySet.begin(); it != mySet.end(); it++)
+        cout << *it << endl;*/
+
+
+
+    char a[MAX];
+    memset(a, 0, MAX);
+    generateAll(0, a);
+    if(counter == 0)
+        fprintf(fp3, "NONE\n");
+
+
+    return 0;
+}
