@@ -1,0 +1,66 @@
+/*
+ID: gorakhm1
+PROG: milk
+LANG: C++
+*/
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+
+using namespace std;
+
+struct milk {
+    int p, a;
+}farmer[5001];
+
+bool comparator(struct milk one, struct milk two){
+
+    if(one.p == two.p)
+        return two.a < one.a;
+
+    else return one.p < two.p;
+}
+
+int main()
+{
+
+    ifstream fin("milk.in");
+    ofstream fout("milk.out");
+    int n, m;
+
+    fin >> n >> m;
+
+    int i, j;
+
+    for(i = 0; i < m; i++){
+        fin >> farmer[i].p >> farmer[i].a;
+    }
+
+    if(n == 0){
+        fout << 0 << endl;
+        return 0;
+    }
+    sort(farmer, farmer + m, comparator);
+
+    int cost = 0;
+    int counter = 0;
+    i = 0;
+    while(counter != n){
+        if(farmer[i].a >= n - counter){
+
+            cost += farmer[i].p * (n - counter);
+            counter = n;
+
+        }
+
+        else {
+            counter += farmer[i].a;
+            cost += farmer[i].a * farmer[i].p;
+            i++;
+        }
+    }
+
+    fout << cost << endl;
+    return 0;
+}
