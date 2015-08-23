@@ -1,0 +1,105 @@
+/*
+ID: gorakhm1
+PROG: beads
+LANG: C++
+*/
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+int main()
+{
+    ofstream fout("beads.out");
+    ifstream fin("beads.in");
+    int iii, jjj, kkk, n, maxi = 0, counter;
+    std::string s;
+    char ch;
+    fin >> n >> s;
+
+    ch = s[0];
+    for(iii = 1; iii < n; iii++){
+        if(ch == s[iii] || s[iii] == 'w')
+            continue;
+
+        else break;
+    }
+
+    if(iii == n){
+        fout << n << endl;
+    }
+
+
+    else{
+
+        for(iii = 0; iii < n; iii++){
+            ch = s[iii];
+            counter = 1;
+            if(ch == 'w'){
+                jjj = (iii + 1) % n;
+                while(s[jjj] == 'w'){
+                    jjj = (jjj + 1) % n;
+                    counter++;
+                }
+
+                ch = s[jjj];
+                jjj = (jjj + 1) % n;
+                counter++;
+            }
+
+            else {
+                jjj = (iii + 1) % n;
+            }
+
+            for(;  ; jjj = (jjj + 1) % n){
+                if(ch == s[jjj] || s[jjj] == 'w'){
+                    counter++;
+                    continue;
+                }
+
+                else break;
+            }
+
+            jjj = (jjj - 1 + n) % n;
+
+            kkk = (iii - 1 + n) % n;
+            ch = s[kkk];
+            counter++;
+            if(ch == 'w'){
+                kkk = (kkk - 1 + n) % n;
+                while(s[kkk] == 'w'){
+                    kkk = (kkk - 1 + n) % n;
+                    counter++;
+                }
+                ch = s[kkk];
+                kkk = (kkk - 1 + n) % n;
+                counter++;
+
+            }
+
+            else{
+                kkk = (kkk - 1 + n) % n;
+            }
+
+            for(       ; kkk != jjj ; kkk = (kkk - 1 + n) % n){
+                if(ch == s[kkk] || s[kkk] == 'w'){
+                    counter++;
+                    continue;
+                }
+
+                else break;
+            }
+
+            if(counter > maxi)
+                maxi = counter;
+
+        }
+
+        fout << maxi << endl;
+
+    }
+
+
+    return 0;
+}
