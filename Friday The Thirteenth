@@ -1,0 +1,123 @@
+/*
+ID: gorakhm1
+PROG: friday
+LANG: C++
+*/
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int arr[7];
+
+
+int main() {
+
+    ifstream fin("friday.in");
+    ofstream fout("friday.out");
+
+	int year = 1900;
+	int n;
+	int days = 2;
+	int iii;
+
+
+	fin >> n;
+
+	n = year + n - 1;
+
+	for( ; year <= n; year++){
+
+		//jan
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+			if(iii == 13)
+				arr[days]++;
+		}
+
+		//feb
+		if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+			for(iii = 1; iii <= 29; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+			}
+		}
+
+		else {
+			for(iii = 1; iii <= 28; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+			}
+		}
+
+		//march
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+		//april
+		for(iii = 1; iii <= 30; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+
+		//may
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+		//june
+		for(iii = 1; iii <= 30; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+
+		//july
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+
+		//august
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+
+		//september
+		for(iii = 1; iii <= 30; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+		//october
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+		//november
+		for(iii = 1; iii <= 30; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+		//december
+		for(iii = 1; iii <= 31; iii++, days = (days + 1) % 7){
+				if(iii == 13)
+					arr[days]++;
+		}
+
+
+	}
+
+	for(iii = 0; iii <= 5; iii++)
+		fout << arr[iii] << " ";
+    fout << arr[iii] << endl;
+	return 0;
+}
