@@ -1,0 +1,83 @@
+/*
+ID: gorakhm1
+PROG: palsquare
+LANG: C++
+*/
+
+
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstring>
+
+
+using namespace std;
+
+bool checkPalin(string a){
+    string b = "";
+
+    for(int i = a.length() - 1; i >= 0; i--){
+        b.push_back(a[i]);
+    }
+
+    if(a.compare(b) == 0)
+        return true;
+
+    return false;
+
+}
+
+string convertToBase(int b, int n){
+    int remainder;
+    string a = "";
+    while(n != 0){
+        char c[2];
+        remainder = n % b;
+        if(remainder < 10)
+            sprintf(c, "%d", remainder);
+
+        else {
+
+            c[0] = 'A' + (remainder - 10);
+            c[1] = '\0';
+        }
+        a.append(c);
+        n /= b;
+
+    }
+
+    string c = "";
+    for(int i = a.length() - 1; i >= 0; i--)
+        c.push_back(a[i]);
+
+    return c;
+
+}
+
+int main()
+{
+
+    ifstream fin("palsquare.in");
+    ofstream fout("palsquare.out");
+
+
+    int b;
+    fin >> b;
+   //cin >> b;
+    for(int i = 1; i <= 300; i++){
+        string a, c;
+
+        c = convertToBase(b, i * i);
+
+
+       if(checkPalin(c)){
+
+           a = convertToBase(b, i);
+           //cout << a << " " << c << "\n";
+           fout << a << " " << c << "\n";
+        }
+
+    }
+
+    return 0;
+}
