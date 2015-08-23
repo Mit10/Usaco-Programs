@@ -1,0 +1,182 @@
+/*
+ID: gorakhm1
+PROG: transform
+LANG: C++
+*/
+
+#include <iostream>
+#include <cstdio>
+#include <fstream>
+#define MAX 12
+#define endl "\n"
+using namespace std;
+
+int firstThreeTransformations(char mat[MAX][MAX]);
+void rotate_90(char mat[MAX][MAX]);
+void mirror();
+bool checkSimilar(char mat[MAX][MAX]);
+void print(char mat[MAX][MAX]);
+void copier(char mat[MAX][MAX]);
+
+char a[MAX][MAX];
+char b[MAX][MAX];
+char t[MAX][MAX];
+char temp[MAX][MAX];
+int n;
+
+
+
+void rotate_90(char mat[MAX][MAX]){
+    int r, c, k;
+
+    for(c = 0; c <= n - 1; c++){
+        for(r = n - 1, k = 0; r >= 0; r--, k++){
+            b[c][k] = mat[r][c];
+
+        }
+    }
+
+}
+
+
+void mirror(){
+    int r, c, k;
+    for(r = 0; r <= n - 1; r++){
+        for(c = n - 1, k = 0; c >= 0; c--, k++){
+            b[r][k] = a[r][c];
+        }
+    }
+
+}
+
+void copier(char mat[MAX][MAX]){
+    int i, j;
+    for(i = 0; i < n; i++){
+        for(j = 0 ; j< n; j++)
+            temp[i][j] = mat[i][j];
+    }
+
+}
+
+bool checkSimilar(char mat[MAX][MAX]){
+    int i, j;
+    for(i = 0; i < n; i++){
+        for(j = 0; j  < n; j++){
+            if(t[i][j] != mat[i][j])
+                return false;
+        }
+
+    }
+
+    return true;
+
+}
+
+
+
+int firstThreeTransformations(char mat[MAX][MAX]){
+
+   rotate_90(mat);
+   // print(b);
+    copier(b);
+   if(checkSimilar(b))
+        return 1;
+
+    rotate_90(temp);
+  //  print(b);
+    copier(b);
+    if(checkSimilar(b))
+       return 2;
+
+    rotate_90(temp);
+    //print(b);
+    copier(b);
+
+    if(checkSimilar(b))
+        return 3;
+
+
+    return 0;
+}
+
+void print(char mat[MAX][MAX]){
+    int i, j;
+
+    for(i = 0; i < n; i++){
+        for(j = 0; j < n; j++){
+            printf("%c ", mat[i][j]);
+        }
+
+        printf("\n");
+    }
+
+
+    printf("\n");
+}
+
+
+int main() {
+
+	ifstream fin("transform.in");
+	ofstream fout("transform.out");
+
+	//scanf("%d", &n);
+    fin >> n;
+	int i, j, k;
+	for(i = 0; i < n; i++){
+       // scanf("%s", a[i]);
+       fin >> a[i];
+
+	}
+
+	for(i = 0; i < n; i++){
+       // scanf("%s", t[i]);
+        fin >> t[i];
+	}
+
+
+	/*k = firstThreeTransformations(a);
+	mirror();
+	print(b);
+	copier(b);
+	firstThreeTransformations(temp);*/
+
+	if(k = firstThreeTransformations(a)){
+       // printf("%d\n", k);
+       fout << k << endl;
+	}
+
+
+	else {
+
+        mirror();
+        copier(b);
+        if(checkSimilar(b)){
+           // printf("4\n");
+           fout << 4 << endl;
+        }
+
+        else {
+            if(firstThreeTransformations(temp)){
+               // printf("5\n");
+               fout << 5 << endl;
+            }
+
+            else{
+                if(checkSimilar(a))
+                  //  printf("6\n");
+                  fout << 6 << endl;
+
+                else //printf("7\n");
+                    fout << 7 << endl;
+
+            }
+        }
+
+	}
+
+
+
+
+	return 0;
+}
